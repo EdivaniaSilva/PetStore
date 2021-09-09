@@ -2,13 +2,17 @@
 package petstore;
 
 // 2 - Bibliotecas
+import io.restassured.specification.Argument;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
 
 // 3 - Classe
 public class Pet {
@@ -35,6 +39,10 @@ public class Pet {
         .then()
                 .log().all() // Log do Response
                 .statusCode(200)
+                .body("name", is("Snoopy"))
+                .body("status", is("available"))
+                .body("category.name", is("dog"))
+                .body("tags.name", contains("semana do teste de api"))
         ;
     }
 }
